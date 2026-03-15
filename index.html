@@ -3,12 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Lotto - ECDF & Pattern Analysis</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Google Fonts -->
+    <title>Premium Lotto - Draw Animation (v1215)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.5);
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --accent: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', 'Inter', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; }
+
+        .background-blobs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; filter: blur(80px); }
+        .blob { position: absolute; width: 40vw; height: 40vw; border-radius: 50%; opacity: 0.4; }
+        .blob-1 { background: #4f46e5; top: -10%; left: -10%; animation: move-1 20s infinite alternate; }
+        .blob-2 { background: #7c3aed; bottom: -10%; right: -10%; animation: move-2 25s infinite alternate; }
+        .blob-3 { background: #2563eb; top: 50%; left: 50%; transform: translate(-50%, -50%); animation: move-3 30s infinite alternate; }
+
+        @keyframes move-1 { from { transform: translate(0, 0); } to { transform: translate(20%, 20%); } }
+        @keyframes move-2 { from { transform: translate(0, 0); } to { transform: translate(-20%, -20%); } }
+        @keyframes move-3 { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-40%, -60%) scale(1.2); } }
+
+        .app-container { width: 100%; max-width: 800px; padding: 2rem; text-align: center; }
+        header h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 0.5rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--text-dim); font-size: 1rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .draw-machine-container {
+            margin-bottom: 3rem;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .machine-sphere {
+            width: 250px;
+            height: 250px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 auto;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(0,0,0,0.4));
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .machine-sphere::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .inner-balls {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            padding: 20px;
+            opacity: 0.3;
+            transition: transform 0.1s linear;
+        }
+
+        .inner-ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .sphere-spinning .inner-balls {
+            animation: spin-balls 0.5s infinite linear;
+        }
+
+        @keyframes spin-balls {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .generator-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .draw-exit {
+            width: 80px;
+            height: 80px;
+            margin: -40px auto 20px;
+            background: rgba(30, 41, 59, 1);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .number-display {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            min-height: 80px;
+            margin-bottom: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .lotto-ball {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: shoot-out 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes shoot-out {
+            0% { transform: translateY(-100px) scale(0) rotateX(-90deg); opacity: 0; }
+            100% { transform: translateY(0) scale(1) rotateX(0deg); opacity: 1; }
+        }
+
+        .ball-1-10 { background: radial-gradient(circle at 30% 30%, #facc15, #eab308); }
+        .ball-11-20 { background: radial-gradient(circle at 30% 30%, #60a5fa, #2563eb); }
+        .ball-21-30 { background: radial-gradient(circle at 30% 30%, #f87171, #dc2626); }
+        .ball-31-40 { background: radial-gradient(circle at 30% 30%, #94a3b8, #475569); }
+        .ball-41-45 { background: radial-gradient(circle at 30% 30%, #4ade80, #16a34a); }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 3.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 25px -5px var(--primary-glow);
+        }
+
+        .primary-btn:disabled {
+            background: #475569;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .analysis-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .info-card { background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 1.5rem; text-align: left; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .info-card h3 { margin-bottom: 0.5rem; font-size: 1rem; color: var(--accent); }
+        .info-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
+
+        .current-drawing-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent);
+            height: 2rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <div class="background-blobs">
@@ -20,36 +207,156 @@
     <main class="app-container">
         <header>
             <h1>PREMIUM LOTTO</h1>
-            <p class="subtitle">ECDF & Co-occurrence Pattern Analysis</p>
+            <p class="subtitle">역대 당첨 이력 기반 실시간 추첨 엔진</p>
         </header>
 
+        <div class="draw-machine-container">
+            <div id="machine-sphere" class="machine-sphere">
+                <div class="inner-balls">
+                    <!-- Many small balls for effect -->
+                    <div class="inner-ball" style="background:#facc15"></div>
+                    <div class="inner-ball" style="background:#60a5fa"></div>
+                    <div class="inner-ball" style="background:#f87171"></div>
+                    <div class="inner-ball" style="background:#94a3b8"></div>
+                    <div class="inner-ball" style="background:#4ade80"></div>
+                    <div class="inner-ball" style="background:#facc15"></div>
+                    <div class="inner-ball" style="background:#60a5fa"></div>
+                    <div class="inner-ball" style="background:#f87171"></div>
+                    <div class="inner-ball" style="background:#94a3b8"></div>
+                    <div class="inner-ball" style="background:#4ade80"></div>
+                </div>
+            </div>
+        </div>
+
         <section class="generator-card">
-            <div class="prediction-status">
-                <span id="data-status">데이터 분석 완료</span>
-                <span class="pulse-icon"></span>
+            <div class="draw-exit" id="draw-exit">
+                <!-- Selected ball will appear here -->
             </div>
 
+            <div id="drawing-status" class="current-drawing-status">추첨 준비 완료</div>
+
             <div id="number-display" class="number-display">
-                <div class="placeholder-text">행운의 번호를 생성하세요</div>
+                <div class="placeholder-text">행운의 6개 번호를 추첨하세요</div>
             </div>
 
             <div class="controls">
-                <button id="generate-btn" class="primary-btn">번호 생성하기</button>
+                <button id="generate-btn" class="primary-btn">추첨 시작하기</button>
             </div>
         </section>
 
         <section class="analysis-info">
             <div class="info-card">
-                <h3>통계 기반 분석</h3>
-                <p>과거 당첨 데이터를 바탕으로 각 숫자의 출현 빈도를 계산하여 확률을 적용합니다.</p>
+                <h3>정밀 분석 엔진</h3>
+                <p>1회~1215회 전수 조사를 통한 ECDF 확률 모델이 실시간으로 적용됩니다.</p>
             </div>
             <div class="info-card">
-                <h3>패턴 인지 엔진</h3>
-                <p>숫자 간의 공출현 패턴을 분석하여, 하나의 숫자가 뽑힐 때 다음 숫자의 확률을 동적으로 조정합니다.</p>
+                <h3>패턴 최적화</h3>
+                <p>각 번호 추첨 시마다 남은 번호들의 상관관계를 재계산하여 최적의 조합을 산출합니다.</p>
             </div>
         </section>
     </main>
 
-    <script type="module" src="js/main.js"></script>
+    <script>
+        // Full History Analysis Data (v1215)
+        const FULL_HISTORY_STATS = {
+            frequencies: [0, 167, 152, 169, 159, 153, 163, 168, 155, 133, 159, 164, 177, 175, 169, 164, 166, 169, 172, 167, 167, 165, 141, 146, 163, 150, 164, 180, 151, 152, 156, 164, 141, 173, 181, 161, 162, 171, 169, 165, 172, 147, 153, 162, 161, 172],
+            coWeights: [
+                {a: 11, b: 21, w: 34}, {a: 33, b: 40, w: 33}, {a: 6, b: 38, w: 31}, 
+                {a: 12, b: 24, w: 30}, {a: 37, b: 40, w: 29}, {a: 19, b: 21, w: 29}, 
+                {a: 3, b: 13, w: 29}, {a: 1, b: 28, w: 29}, {a: 10, b: 31, w: 29}, 
+                {a: 3, b: 20, w: 29}, {a: 24, b: 27, w: 29}, {a: 15, b: 34, w: 29}
+            ]
+        };
+
+        class LottoEngine {
+            constructor() {
+                this.freqs = [...FULL_HISTORY_STATS.frequencies];
+                this.matrix = Array(46).fill(0).map(() => Array(46).fill(0));
+                FULL_HISTORY_STATS.coWeights.forEach(p => {
+                    this.matrix[p.a][p.b] = p.w;
+                    this.matrix[p.b][p.a] = p.w;
+                });
+            }
+
+            drawSingle(probabilities, selected) {
+                const currentProbs = [...probabilities];
+                selected.forEach(n => currentProbs[n] = 0);
+                
+                const total = currentProbs.reduce((a, b) => a + b, 0);
+                const r = Math.random() * total;
+                let s = 0;
+                for (let i = 1; i <= 45; i++) {
+                    s += currentProbs[i];
+                    if (r <= s) return i;
+                }
+                return 45;
+            }
+
+            updateWeights(picked, probabilities, selected) {
+                const patterns = this.matrix[picked];
+                for (let j = 1; j <= 45; j++) {
+                    if (!selected.includes(j)) {
+                        probabilities[j] += patterns[j] * 15;
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const engine = new LottoEngine();
+            const btn = document.getElementById('generate-btn');
+            const display = document.getElementById('number-display');
+            const sphere = document.getElementById('machine-sphere');
+            const exit = document.getElementById('draw-exit');
+            const status = document.getElementById('drawing-status');
+
+            const createBall = (num, small = false) => {
+                const ball = document.createElement('div');
+                const sizeClass = small ? 'small-ball' : '';
+                ball.className = `lotto-ball ${sizeClass} ${num<=10?'ball-1-10':num<=20?'ball-11-20':num<=30?'ball-21-30':num<=40?'ball-31-40':'ball-41-45'}`;
+                ball.textContent = num;
+                return ball;
+            };
+
+            btn.onclick = async () => {
+                btn.disabled = true;
+                display.innerHTML = '';
+                exit.innerHTML = '';
+                const selected = [];
+                const probs = [...engine.freqs];
+
+                for (let i = 1; i <= 6; i++) {
+                    status.textContent = `${i}번째 번호 분석 및 추첨 중...`;
+                    sphere.classList.add('sphere-spinning');
+                    
+                    // Shuffle effect
+                    await new Promise(r => setTimeout(r, 1200));
+                    
+                    const picked = engine.drawSingle(probs, selected);
+                    selected.push(picked);
+                    engine.updateWeights(picked, probs, selected);
+
+                    // Show ball at exit
+                    const exitBall = createBall(picked);
+                    exit.innerHTML = '';
+                    exit.appendChild(exitBall);
+                    
+                    // Stop spinning briefly
+                    sphere.classList.remove('sphere-spinning');
+                    await new Promise(r => setTimeout(r, 500));
+
+                    // Move to display
+                    display.appendChild(createBall(picked));
+                    exit.innerHTML = '';
+                    
+                    await new Promise(r => setTimeout(r, 300));
+                }
+
+                status.textContent = '모든 번호 추첨 완료!';
+                btn.textContent = '다시 추첨하기';
+                btn.disabled = false;
+            };
+        });
+    </script>
 </body>
 </html>

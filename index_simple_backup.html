@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Lotto - ECDF & Pattern Analysis</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="app-container">
+        <header>
+            <h1>PREMIUM LOTTO</h1>
+            <p class="subtitle">ECDF & Co-occurrence Pattern Analysis</p>
+        </header>
+
+        <section class="generator-card">
+            <div class="prediction-status">
+                <span id="data-status">데이터 분석 완료</span>
+                <span class="pulse-icon"></span>
+            </div>
+
+            <div id="number-display" class="number-display">
+                <div class="placeholder-text">행운의 번호를 생성하세요</div>
+            </div>
+
+            <div class="controls">
+                <button id="generate-btn" class="primary-btn">번호 생성하기</button>
+            </div>
+        </section>
+
+        <section class="analysis-info">
+            <div class="info-card">
+                <h3>통계 기반 분석</h3>
+                <p>과거 당첨 데이터를 바탕으로 각 숫자의 출현 빈도를 계산하여 확률을 적용합니다.</p>
+            </div>
+            <div class="info-card">
+                <h3>패턴 인지 엔진</h3>
+                <p>숫자 간의 공출현 패턴을 분석하여, 하나의 숫자가 뽑힐 때 다음 숫자의 확률을 동적으로 조정합니다.</p>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
