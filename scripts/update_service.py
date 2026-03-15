@@ -73,9 +73,10 @@ def update_service():
         flags=re.DOTALL
     )
     
-    # 버전 정보 및 문구 교체 (제작자 정보 포함)
+    # 버전 정보 및 문구 교체 (제작자 정보 및 배지 포함)
     html_content = re.sub(r"\(v\d+\)", f"(v{latest_draw})", html_content)
-    html_content = re.sub(r"\d+회차 데이터 분석 완료", f"{latest_draw}회차 데이터 분석 완료", html_content)
+    html_content = re.sub(r">v\d+</span>", f">v{latest_draw}</span>", html_content)
+    html_content = re.sub(r"\d+회차 전수 조사를 통한", f"{latest_draw}회차 전수 조사를 통한", html_content)
     
     # 제작자 정보가 없을 경우를 대비해 푸터 영역 보강
     if "건뚱" not in html_content:
