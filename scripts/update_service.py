@@ -73,10 +73,19 @@ def update_service():
         flags=re.DOTALL
     )
     
-    # 버전 정보 및 문구 교체
+    # 버전 정보 및 문구 교체 (제작자 정보 포함)
     html_content = re.sub(r"\(v\d+\)", f"(v{latest_draw})", html_content)
     html_content = re.sub(r"\d+회차 데이터 분석 완료", f"{latest_draw}회차 데이터 분석 완료", html_content)
-    html_content = re.sub(r"최근 \d+회차 이력 반영 완료", f"최근 {latest_draw}회차 이력 반영 완료", html_content)
+    
+    # 제작자 정보가 없을 경우를 대비해 푸터 영역 보강
+    if "건뚱" not in html_content:
+        footer_pattern = r'<div class="footer-info">.*?</div>'
+        new_footer = f"""<div class="footer-info">
+            <p>© 2026 Premium Lotto - All Rights Reserved</p>
+            <p><strong>건뚱</strong> 에 의해 제작되었습니다</p>
+            <p class="data-source-info">현재 회차: <span id="latest-draw-no">{latest_draw}</span>회차 데이터 분석 완료 | 데이터 출처: 동행복권 제공</p>
+        </div>"""
+        html_content = re.sub(footer_pattern, new_footer, html_content, flags=re.DOTALL)
 
     # 4. lottoData.js 업데이트
     LOTTO_DATA_PATH = os.path.join(BASE_DIR, "js", "lottoData.js")
