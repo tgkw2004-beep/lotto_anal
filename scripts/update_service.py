@@ -5,7 +5,8 @@ import urllib.request
 from collections import Counter
 
 # 설정
-BASE_DIR = r"c:\Users\tgkw2\OneDrive\바탕 화면\project\lotto"
+# 스크립트 파일(scripts/update_service.py) 위치를 기준으로 프로젝트 루트 경로 설정
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_URL = "https://smok95.github.io/lotto/results/all.json"
 HISTORY_PATH = os.path.join(BASE_DIR, "data", "lotto_history.json")
 HTML_PATH = os.path.join(BASE_DIR, "index_all_in_one_v2.html")

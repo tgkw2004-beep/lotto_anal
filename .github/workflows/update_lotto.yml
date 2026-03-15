@@ -1,0 +1,33 @@
+name: Weekly Lotto Data Update
+
+on:
+  schedule:
+    # 매주 일요일 새벽 02:00 (KST 기준 일요일 오전 11:00)
+    # 토요일 저녁 발표 후 데이터 처리의 안정성을 위해 일요일 오전에 실행하도록 설정
+    - cron: '0 2 * * 0'
+  workflow_dispatch: # 수동 실행 기능 추가
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 리포지토리에 커밋 및 푸시 권한 부여
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run update script
+        run: python scripts/update_service.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated weekly data update" && git push)
