@@ -2,9 +2,9 @@ name: Weekly Lotto Data Update
 
 on:
   schedule:
-    # 매주 일요일 새벽 02:00 (KST 기준 일요일 오전 11:00)
+    # 매주 일요일 새벽 00:00 (KST 기준 일요일 오전 09:00)
     # 토요일 저녁 발표 후 데이터 처리의 안정성을 위해 일요일 오전에 실행하도록 설정
-    - cron: '0 2 * * 0'
+    - cron: '0 0 * * 0'
   workflow_dispatch: # 수동 실행 기능 추가
 
 jobs:

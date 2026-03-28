@@ -9,7 +9,7 @@ from collections import Counter
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_URL = "https://smok95.github.io/lotto/results/all.json"
 HISTORY_PATH = os.path.join(BASE_DIR, "data", "lotto_history.json")
-HTML_PATH = os.path.join(BASE_DIR, "index_all_in_one_v2.html")
+HTML_PATH = os.path.join(BASE_DIR, "index.html")
 
 def update_service():
     print("--- 로또 서비스 주간 자동 업데이트 시작 ---")
@@ -87,6 +87,9 @@ def update_service():
             <p class="data-source-info">현재 회차: <span id="latest-draw-no">{latest_draw}</span>회차 데이터 분석 완료 | 데이터 출처: 동행복권 제공</p>
         </div>"""
         html_content = re.sub(footer_pattern, new_footer, html_content, flags=re.DOTALL)
+    
+    with open(HTML_PATH, "w", encoding="utf-8") as f:
+        f.write(html_content)
 
     # 4. lottoData.js 업데이트
     LOTTO_DATA_PATH = os.path.join(BASE_DIR, "js", "lottoData.js")
