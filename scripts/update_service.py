@@ -53,6 +53,9 @@ def update_service():
     top_20 = sorted_co[:20]
     formatted_co = [{"a": a, "b": b, "w": w} for (a, b), w in top_20]
     
+    # 최근 5회차 데이터 추출 (최신순)
+    recent_5 = cleaned_data[-5:][::-1]
+    
     # 3. HTML 파일 업데이트
     print(f"3. 웹서비스 소스 코드 업데이트 중: {HTML_PATH}")
     with open(HTML_PATH, "r", encoding="utf-8") as f:
@@ -69,6 +72,14 @@ def update_service():
     html_content = re.sub(
         r"coWeights: \[.*?\]",
         f"coWeights: {json.dumps(formatted_co)}",
+        html_content,
+        flags=re.DOTALL
+    )
+
+    # 최근 5회 당첨 데이터 교체
+    html_content = re.sub(
+        r"const RECENT_HISTORY_DATA = \[.*?\];",
+        f"const RECENT_HISTORY_DATA = {json.dumps(recent_5)};",
         html_content,
         flags=re.DOTALL
     )
