@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Lotto - Draw Animation (v1232)</title>
+    <title>Premium Lotto - Draw Animation (v1233)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -330,7 +330,7 @@
 
         <footer style="margin-top: 2rem; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); font-size: 0.9rem;">
             <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); padding: 0.5rem 1rem; border-radius: 2rem; display: inline-block; margin-bottom: 1rem; color: #818cf8; font-weight: 600;">
-                <span id="version-badge">v1232</span> 데이터분석 완료
+                <span id="version-badge">v1233</span> 데이터분석 완료
             </div>
             <p><strong>건뚱</strong> 에 의해 제작되었습니다</p>
             <p style="margin-top: 0.5rem; opacity: 0.7;">© 2026 Premium Lotto Service</p>
@@ -338,14 +338,14 @@
     </main>
 
     <script>
-        // Full History Analysis Data (v1232)
+        // Full History Analysis Data (v1233)
         const FULL_HISTORY_STATS = {
-            frequencies: [0, 169, 154, 172, 162, 153, 165, 168, 158, 136, 161, 165, 179, 179, 172, 168, 168, 171, 176, 169, 169, 166, 145, 147, 166, 152, 165, 181, 157, 155, 158, 168, 144, 174, 184, 162, 164, 172, 170, 167, 172, 150, 157, 163, 164, 175],
-            coWeights: [{"a": 11, "b": 21, "w": 34}, {"a": 33, "b": 40, "w": 33}, {"a": 6, "b": 38, "w": 31}, {"a": 12, "b": 24, "w": 31}, {"a": 1, "b": 28, "w": 30}, {"a": 10, "b": 31, "w": 30}, {"a": 34, "b": 42, "w": 30}, {"a": 37, "b": 40, "w": 29}, {"a": 19, "b": 21, "w": 29}, {"a": 14, "b": 15, "w": 29}, {"a": 3, "b": 13, "w": 29}, {"a": 3, "b": 20, "w": 29}, {"a": 3, "b": 24, "w": 29}, {"a": 24, "b": 27, "w": 29}, {"a": 15, "b": 34, "w": 29}, {"a": 18, "b": 31, "w": 28}, {"a": 13, "b": 33, "w": 28}, {"a": 12, "b": 15, "w": 28}, {"a": 3, "b": 27, "w": 28}, {"a": 12, "b": 34, "w": 28}]
+            frequencies: [0, 169, 155, 172, 162, 153, 165, 169, 158, 136, 161, 165, 179, 179, 172, 168, 168, 171, 176, 169, 170, 166, 145, 147, 166, 153, 165, 181, 157, 155, 158, 168, 144, 174, 184, 162, 164, 173, 170, 167, 173, 150, 157, 163, 164, 175],
+            coWeights: [{"a": 11, "b": 21, "w": 34}, {"a": 33, "b": 40, "w": 33}, {"a": 6, "b": 38, "w": 31}, {"a": 12, "b": 24, "w": 31}, {"a": 37, "b": 40, "w": 30}, {"a": 1, "b": 28, "w": 30}, {"a": 10, "b": 31, "w": 30}, {"a": 34, "b": 42, "w": 30}, {"a": 19, "b": 21, "w": 29}, {"a": 14, "b": 15, "w": 29}, {"a": 3, "b": 13, "w": 29}, {"a": 3, "b": 20, "w": 29}, {"a": 3, "b": 24, "w": 29}, {"a": 24, "b": 27, "w": 29}, {"a": 15, "b": 34, "w": 29}, {"a": 18, "b": 31, "w": 28}, {"a": 13, "b": 33, "w": 28}, {"a": 12, "b": 15, "w": 28}, {"a": 3, "b": 27, "w": 28}, {"a": 12, "b": 34, "w": 28}]
         };
 
         // Recent History Data (Automatically updated by update_service.py)
-        const RECENT_HISTORY_DATA = [{"draw_no": 1232, "numbers": [12, 15, 19, 22, 24, 36]}, {"draw_no": 1231, "numbers": [4, 13, 14, 18, 31, 38]}, {"draw_no": 1230, "numbers": [3, 8, 9, 22, 28, 42]}, {"draw_no": 1229, "numbers": [12, 13, 29, 34, 37, 42]}, {"draw_no": 1228, "numbers": [24, 29, 30, 31, 35, 44]}];
+        const RECENT_HISTORY_DATA = [{"draw_no": 1233, "numbers": [2, 7, 20, 25, 37, 40]}, {"draw_no": 1232, "numbers": [12, 15, 19, 22, 24, 36]}, {"draw_no": 1231, "numbers": [4, 13, 14, 18, 31, 38]}, {"draw_no": 1230, "numbers": [3, 8, 9, 22, 28, 42]}, {"draw_no": 1229, "numbers": [12, 13, 29, 34, 37, 42]}];
 
         class LottoEngine {
             constructor() {
