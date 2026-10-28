@@ -31,7 +31,7 @@
         @keyframes move-2 { from { transform: translate(0, 0); } to { transform: translate(-20%, -20%); } }
         @keyframes move-3 { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-40%, -60%) scale(1.2); } }
 
-        .app-container { width: 100%; max-width: 800px; padding: 2rem; text-align: center; }
+        .app-container { width: 100%; max-width: 820px; padding: 2rem; text-align: center; }
         header h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 0.5rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .subtitle { color: var(--text-dim); font-size: 1rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
 
@@ -99,7 +99,7 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 2rem;
-            padding: 3rem;
+            padding: 2.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             margin-bottom: 2rem;
             position: relative;
@@ -108,7 +108,7 @@
         .draw-exit {
             width: 80px;
             height: 80px;
-            margin: -40px auto 20px;
+            margin: -65px auto 20px;
             background: rgba(30, 41, 59, 1);
             border: 2px solid rgba(255,255,255,0.1);
             border-radius: 50%;
@@ -124,7 +124,7 @@
             justify-content: center;
             gap: 12px;
             min-height: 80px;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -160,8 +160,8 @@
             background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
             color: white;
             border: none;
-            padding: 1.2rem 3.5rem;
-            font-size: 1.2rem;
+            padding: 1.1rem 2.8rem;
+            font-size: 1.15rem;
             font-weight: 700;
             border-radius: 1.2rem;
             cursor: pointer;
@@ -189,10 +189,10 @@
         .info-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
 
         .current-drawing-status {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
             color: var(--accent);
-            height: 2rem;
+            min-height: 2rem;
             margin-bottom: 1rem;
         }
 
@@ -260,6 +260,437 @@
             opacity: 1;
             transform: none;
         }
+
+        .lotto-ball.medium-ball {
+            width: 44px;
+            height: 44px;
+            font-size: 1.05rem;
+            animation: shoot-out 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .lotto-ball.no-anim {
+            animation: none !important;
+            opacity: 1;
+            transform: none;
+        }
+
+        .game-row.row-highlight {
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 18px rgba(99, 102, 241, 0.25);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .lotto-ball.fixed-mark {
+            outline: 3px solid #f59e0b;
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+        }
+
+        .lotto-ball.fixed-mark::after {
+            content: '고정';
+            position: absolute;
+            bottom: -7px;
+            background: #f59e0b;
+            color: #0f172a;
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 6px;
+            line-height: 1.1;
+        }
+
+        /* Purchase Convenience Controls */
+        .purchase-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.25rem;
+        }
+
+        .segmented-control {
+            display: inline-flex;
+            background: rgba(15, 23, 42, 0.65);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .seg-btn {
+            background: transparent;
+            color: var(--text-dim);
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .seg-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px var(--primary-glow);
+        }
+
+        .filter-toggle-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 15px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .filter-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .badge-count {
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .badge-fixed { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .badge-exclude { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        /* Number Selector Panel (Fixed / Excluded) */
+        .number-picker-panel {
+            display: none;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.2rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .number-picker-panel.open {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .picker-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.85rem;
+        }
+
+        .picker-mode-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mode-tab {
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-tab.active-fixed {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: #f59e0b;
+            color: #fbbf24;
+        }
+
+        .mode-tab.active-exclude {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #f87171;
+        }
+
+        .picker-quick-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-dim);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.14);
+        }
+
+        .picker-help {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 0.85rem;
+        }
+
+        .picker-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 6px;
+        }
+
+        @media (max-width: 540px) {
+            .picker-grid { grid-template-columns: repeat(7, 1fr); }
+            .analysis-info { grid-template-columns: 1fr; }
+        }
+
+        .picker-num-btn {
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(30, 41, 59, 0.85);
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+        }
+
+        .picker-num-btn:hover {
+            border-color: rgba(255,255,255,0.35);
+            transform: translateY(-1px);
+        }
+
+        .picker-num-btn.is-fixed {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            border-color: #fbbf24;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .picker-num-btn.is-excluded {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.45);
+            text-decoration: line-through;
+            opacity: 0.65;
+        }
+
+        /* 5-Game Set Slip Layout */
+        .games-slip {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .game-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 16px;
+            border-radius: 1rem;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .game-label {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--accent);
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .game-balls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .game-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .stat-pill {
+            background: rgba(255,255,255,0.06);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .reroll-row-btn {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .reroll-row-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .single-game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+        }
+
+        .single-balls-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1.05rem 1.4rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: none;
+        }
+
+        .secondary-btn.visible {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Saved Tickets Section */
+        .saved-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .saved-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .saved-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .saved-header h2::before {
+            content: '';
+            width: 4px;
+            height: 22px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .saved-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.85rem 1rem;
+            background: rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .saved-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .saved-time {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            min-width: 65px;
+        }
+
+        .delete-saved-btn {
+            background: transparent;
+            border: none;
+            color: #f87171;
+            cursor: pointer;
+            font-size: 0.82rem;
+            padding: 4px 8px;
+            opacity: 0.75;
+        }
+
+        .delete-saved-btn:hover { opacity: 1; }
     </style>
 </head>
 <body>
@@ -298,6 +729,44 @@
                 <!-- Selected ball will appear here -->
             </div>
 
+            <!-- 실전 구매 편의 툴바 -->
+            <div class="purchase-toolbar">
+                <div class="segmented-control" id="game-count-control">
+                    <button type="button" class="seg-btn active" data-games="1">1게임 (단일)</button>
+                    <button type="button" class="seg-btn" data-games="5">5게임 1세트 (5,000원)</button>
+                </div>
+
+                <div class="segmented-control" id="speed-control">
+                    <button type="button" class="seg-btn active" data-fast="false">일반 연출</button>
+                    <button type="button" class="seg-btn" data-fast="true">⚡ 즉시 추첨</button>
+                </div>
+
+                <button type="button" class="filter-toggle-btn" id="toggle-picker-btn">
+                    🎯 고정수 / 제외수 설정
+                    <span class="badge-count badge-fixed" id="fixed-count-badge">고정 0</span>
+                    <span class="badge-count badge-exclude" id="exclude-count-badge">제외 0</span>
+                </button>
+            </div>
+
+            <!-- 고정수 / 제외수 번호 선택 패널 -->
+            <div class="number-picker-panel" id="number-picker-panel">
+                <div class="picker-header">
+                    <div class="picker-mode-tabs">
+                        <button type="button" class="mode-tab active-fixed" id="tab-fixed">📌 고정수 선택 (최대 5개)</button>
+                        <button type="button" class="mode-tab" id="tab-exclude">🚫 제외수 선택 (최대 35개)</button>
+                    </div>
+                    <div class="picker-quick-actions">
+                        <button type="button" class="quick-btn" id="btn-exclude-last-draw">직전 회차 번호 제외</button>
+                        <button type="button" class="quick-btn" id="btn-include-last-one">직전 회차 중 1개 랜덤 고정</button>
+                        <button type="button" class="quick-btn" id="btn-reset-picker">전체 초기화</button>
+                    </div>
+                </div>
+                <p class="picker-help" id="picker-help-text">
+                    📌 <strong>고정수 모드</strong>: 아래 번호를 클릭하면 모든 추첨 게임에 해당 번호가 반드시 포함됩니다.
+                </p>
+                <div class="picker-grid" id="picker-grid"></div>
+            </div>
+
             <div id="drawing-status" class="current-drawing-status">추첨 준비 완료</div>
 
             <div id="number-display" class="number-display">
@@ -306,7 +775,18 @@
 
             <div class="controls">
                 <button id="generate-btn" class="primary-btn">추첨 시작하기</button>
+                <button id="copy-btn" class="secondary-btn">📋 번호 복사</button>
+                <button id="save-btn" class="secondary-btn">⭐ 보관함 저장</button>
             </div>
+        </section>
+
+        <!-- 내가 저장한 번호 보관함 -->
+        <section class="saved-section" id="saved-section" style="display: none;">
+            <div class="saved-header">
+                <h2>내 번호 보관함 (실전 마킹용)</h2>
+                <button type="button" class="quick-btn" id="clear-saved-btn">보관함 비우기</button>
+            </div>
+            <div id="saved-list"></div>
         </section>
 
         <section class="recent-draws-section">
@@ -319,12 +799,14 @@
 
         <section class="analysis-info">
             <div class="info-card">
-                <h3>정밀 분석 엔진</h3>
-                <p>1회~1215회 전수 조사를 통한 ECDF 확률 모델이 실시간으로 적용됩니다.</p>
+                <h3>🔥 단기 트렌드 & 미출현 회귀 모델 (① 반영)</h3>
+                <p>1회~1247회차 전수 조사를 통한 누적 베이스에 <strong>최근 30회·10회 단기 핫 넘버</strong>, <strong>장기 미출현(콜드 넘버) 회귀 주기</strong>, <strong>직전 회차 이월수·이웃수(±1)</strong> 가중치를 결합합니다.</p>
+                <div id="trend-insight-badges" style="margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px;"></div>
             </div>
             <div class="info-card">
-                <h3>패턴 최적화</h3>
-                <p>각 번호 추첨 시마다 남은 번호들의 상관관계를 재계산하여 최적의 조합을 산출합니다.</p>
+                <h3>🔗 45×45 전수 상관관계 & 자연 군집 (② 반영)</h3>
+                <p>특정 상위 20개 쌍 편향을 제거하고 <strong>전체 990개 모든 번호 쌍의 동반 출현 매트릭스</strong>를 정규화 반영합니다. 인위적 밸런스 필터를 배제하여 실제 로또다운 <strong>연속 번호(연번)와 구간 군집</strong>을 자연스럽게 허용합니다.</p>
+                <div id="carry-insight-badges" style="margin-top: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px;"></div>
             </div>
         </section>
 
@@ -341,6 +823,10 @@
         // Full History Analysis Data (v1247)
         const FULL_HISTORY_STATS = {
             frequencies: [0, 171, 157, 172, 164, 154, 166, 171, 159, 137, 163, 168, 180, 184, 173, 170, 171, 171, 180, 171, 172, 168, 148, 150, 169, 154, 166, 182, 159, 156, 158, 171, 147, 175, 187, 163, 165, 174, 174, 168, 174, 151, 160, 167, 166, 176],
+            recent30Freqs: [0, 4, 5, 2, 5, 1, 3, 3, 3, 4, 2, 4, 3, 9, 3, 4, 5, 2, 8, 4, 4, 3, 7, 3, 5, 4, 2, 2, 8, 3, 2, 6, 6, 2, 6, 2, 3, 3, 5, 3, 2, 4, 7, 5, 5, 4],
+            recent10Freqs: [0, 1, 2, 0, 2, 1, 0, 1, 1, 1, 1, 2, 0, 5, 1, 0, 3, 0, 3, 1, 1, 1, 3, 2, 3, 1, 1, 1, 2, 0, 0, 2, 3, 1, 1, 0, 1, 0, 3, 0, 0, 1, 3, 2, 2, 1],
+            missingDraws: [0, 3, 5, 17, 2, 2, 12, 6, 0, 4, 5, 7, 11, 3, 0, 12, 1, 21, 3, 7, 7, 0, 0, 1, 1, 2, 3, 1, 1, 11, 19, 5, 2, 8, 3, 13, 8, 10, 3, 12, 10, 5, 0, 4, 4, 0],
+            coMatrix: [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,24,27,21,18,16,14,21,21,21,18,25,23,17,18,23,22,21,16,22,19,9,20,20,13,22,22,30,22,12,13,14,14,25,23,16,19,19,17,20,21,24,18,15,20],[0,24,0,16,20,15,20,15,22,12,13,22,18,18,15,23,23,22,14,22,21,13,18,11,17,24,16,20,22,16,16,18,16,23,22,11,13,19,14,19,14,15,18,17,18,20],[0,27,16,0,22,12,17,21,20,17,22,21,25,29,21,21,18,18,16,16,29,12,25,19,29,9,14,28,13,14,18,19,23,20,20,18,19,21,20,17,16,17,23,19,18,21],[0,21,20,22,0,19,15,13,19,18,23,19,19,17,18,18,23,22,20,18,26,11,16,19,15,20,25,22,19,18,9,19,21,26,19,14,12,22,16,15,24,19,18,18,12,21],[0,18,15,12,19,0,20,16,13,16,11,26,24,24,24,13,15,18,20,13,26,19,18,14,13,19,21,24,15,17,17,16,17,12,26,15,12,17,12,20,12,14,20,20,17,20],[0,16,20,17,15,20,0,24,12,12,18,25,22,24,22,18,22,25,24,23,16,23,22,10,18,14,16,16,28,10,19,19,20,9,19,17,17,25,31,22,23,18,14,18,15,12],[0,14,15,21,13,16,24,0,15,22,15,20,24,20,12,24,22,18,27,26,24,13,23,18,27,17,21,20,16,23,15,14,10,25,18,18,24,21,25,20,23,18,20,18,18,18],[0,21,22,20,19,13,12,15,0,11,13,14,7,23,18,18,15,24,23,23,14,24,14,15,14,18,8,27,17,20,19,23,16,22,17,18,22,16,20,27,14,15,19,20,20,25],[0,21,12,17,18,16,12,22,11,0,16,15,22,14,13,14,14,17,18,14,10,16,12,14,18,16,15,18,19,16,15,12,11,21,15,18,15,17,19,16,15,15,14,15,14,13],[0,21,13,22,23,11,18,15,13,16,0,17,16,19,22,20,27,13,22,23,20,12,24,16,20,15,11,19,18,19,13,31,18,20,18,22,20,22,23,14,26,18,16,15,22,12],[0,18,22,21,19,26,25,20,14,15,17,0,19,22,21,21,20,26,20,16,16,34,15,13,19,14,24,19,21,17,15,19,20,17,10,19,20,22,17,26,9,18,13,16,27,18],[0,25,18,25,19,24,22,24,7,22,16,19,0,21,20,28,14,15,20,23,22,19,14,17,31,16,25,17,16,24,17,18,21,25,29,15,17,16,21,23,24,22,27,23,17,22],[0,23,18,29,17,24,24,20,23,14,19,22,21,0,21,20,17,18,28,19,24,20,16,15,20,20,21,16,26,23,13,22,24,29,23,16,21,25,25,23,20,18,19,22,18,24],[0,17,15,21,18,24,22,12,18,13,22,21,20,21,0,29,18,16,23,17,18,23,23,19,14,18,24,23,16,14,23,22,20,21,18,20,22,22,21,23,24,14,18,17,19,22],[0,18,23,21,18,13,18,24,18,14,20,21,28,20,29,0,16,18,12,26,19,24,22,23,23,21,19,18,18,15,16,14,12,17,29,17,18,20,13,17,19,18,19,24,18,20],[0,23,23,18,23,15,22,22,15,14,27,20,14,17,18,16,0,18,17,24,20,17,11,24,26,23,18,19,21,20,15,24,13,19,18,16,24,19,21,18,21,25,17,22,21,17],[0,22,22,18,22,18,25,18,24,17,13,26,15,18,16,18,18,0,24,21,22,19,15,17,18,16,19,24,20,18,21,22,17,19,21,21,24,18,16,23,17,13,15,19,21,25],[0,21,14,16,20,20,24,27,23,18,22,20,20,28,23,12,17,24,0,16,21,25,14,24,20,13,24,19,16,19,23,28,25,15,27,18,14,19,27,24,17,12,23,21,20,27],[0,16,22,16,18,13,23,26,23,14,23,16,23,19,17,26,24,21,16,0,18,29,16,20,20,23,19,20,21,10,16,18,18,17,25,17,16,13,16,17,18,20,23,24,18,27],[0,22,21,29,26,26,16,24,14,10,20,16,22,24,18,19,20,22,21,18,0,14,14,21,22,18,20,18,18,15,19,19,17,26,18,26,20,18,15,16,20,20,17,18,26,17],[0,19,13,12,11,19,23,13,24,16,12,34,19,20,23,24,17,19,25,29,14,0,18,12,14,23,23,22,11,17,20,17,20,19,28,22,23,21,17,19,15,18,14,18,23,20],[0,9,18,25,16,18,22,23,14,12,24,15,14,16,23,22,11,15,14,16,14,18,0,13,19,17,16,16,20,12,13,19,17,15,22,15,21,23,21,13,17,12,18,13,17,12],[0,20,11,19,19,14,10,18,15,14,16,13,17,15,19,23,24,17,24,20,21,12,13,0,19,18,15,17,18,18,14,16,11,11,21,21,17,16,18,18,19,9,17,22,21,20],[0,20,17,29,15,13,18,27,14,18,20,19,31,20,14,23,26,18,20,20,22,14,19,19,0,13,13,30,11,17,22,15,19,21,19,21,19,19,19,18,21,16,18,10,26,22],[0,13,24,9,20,19,14,17,18,16,15,14,16,20,18,21,23,16,13,23,18,23,17,18,13,0,15,18,19,21,11,18,15,22,19,17,27,22,18,15,18,12,13,18,17,17],[0,22,16,14,25,21,16,21,8,15,11,24,25,21,24,19,18,19,24,19,20,23,16,15,13,15,0,26,19,19,18,21,8,19,21,20,23,19,21,16,22,17,20,24,18,15],[0,22,20,28,22,24,16,20,27,18,19,19,17,16,23,18,19,24,19,20,18,22,16,17,30,18,26,0,20,23,18,17,13,17,16,27,24,23,26,20,26,16,21,21,19,25],[0,30,22,13,19,15,28,16,17,19,18,21,16,26,16,18,21,20,16,21,18,11,20,18,11,19,19,20,0,13,23,12,13,11,23,11,18,16,17,17,20,16,23,21,14,19],[0,22,16,14,18,17,10,23,20,16,19,17,24,23,14,15,20,18,19,10,15,17,12,18,17,21,19,23,13,0,11,19,13,25,24,17,14,16,23,18,22,11,17,18,24,18],[0,12,16,18,9,17,19,15,19,15,13,15,17,13,23,16,15,21,23,16,19,20,13,14,22,11,18,18,23,11,0,23,14,24,28,22,16,20,23,23,15,23,15,23,17,23],[0,13,18,19,19,16,19,14,23,12,31,19,18,22,22,14,24,22,28,18,19,17,19,16,15,18,21,17,12,19,23,0,24,19,27,17,17,21,25,15,25,18,14,23,26,17],[0,14,16,23,21,17,20,10,16,11,18,20,21,24,20,12,13,17,25,18,17,20,17,11,19,15,8,13,13,13,14,24,0,23,18,12,18,16,15,14,19,14,20,12,13,21],[0,14,23,20,26,12,9,25,22,21,20,17,25,29,21,17,19,19,15,17,26,19,15,11,21,22,19,17,11,25,24,19,23,0,18,22,23,24,21,16,33,19,19,14,22,21],[0,25,22,20,19,26,19,18,17,15,18,10,29,23,18,29,18,21,27,25,18,28,22,21,19,19,21,16,23,24,28,27,18,18,0,20,18,16,20,20,20,21,30,19,27,23],[0,23,11,18,14,15,17,18,18,18,22,19,15,16,20,17,16,21,18,17,26,22,15,21,21,17,20,27,11,17,22,17,12,22,20,0,19,24,18,20,23,11,14,25,19,19],[0,16,13,19,12,12,17,24,22,15,20,20,17,21,22,18,24,24,14,16,20,23,21,17,19,27,23,24,18,14,16,17,18,23,18,19,0,20,17,25,15,17,16,13,18,21],[0,19,19,21,22,17,25,21,16,17,22,22,16,25,22,20,19,18,19,13,18,21,23,16,19,22,19,23,16,16,20,21,16,24,16,24,20,0,24,20,31,19,15,21,10,23],[0,19,14,20,16,12,31,25,20,19,23,17,21,25,21,13,21,16,27,16,15,17,21,18,19,18,21,26,17,23,23,25,15,21,20,18,17,24,0,21,23,15,16,19,19,23],[0,17,19,17,15,20,22,20,27,16,14,26,23,23,23,17,18,23,24,17,16,19,13,18,18,15,16,20,17,18,23,15,14,16,20,20,25,20,21,0,16,22,12,22,20,23],[0,20,14,16,24,12,23,23,14,15,26,9,24,20,24,19,21,17,17,18,20,15,17,19,21,18,22,26,20,22,15,25,19,33,20,23,15,31,23,16,0,22,15,21,19,17],[0,21,15,17,19,14,18,18,15,15,18,18,22,18,14,18,25,13,12,20,20,18,12,9,16,12,17,16,16,11,23,18,14,19,21,11,17,19,15,22,22,0,17,18,20,22],[0,24,18,23,18,20,14,20,19,14,16,13,27,19,18,19,17,15,23,23,17,14,18,17,18,13,20,21,23,17,15,14,20,19,30,14,16,15,16,12,15,17,0,19,15,25],[0,18,17,19,18,20,18,18,20,15,15,16,23,22,17,24,22,19,21,24,18,18,13,22,10,18,24,21,21,18,23,23,12,14,19,25,13,21,19,22,21,18,19,0,18,19],[0,15,18,18,12,17,15,18,20,14,22,27,17,18,19,18,21,21,20,18,26,23,17,21,26,17,18,19,14,24,17,26,13,22,27,19,18,10,19,20,19,20,15,18,0,14],[0,20,20,21,21,20,12,18,25,13,12,18,22,24,22,20,17,25,27,27,17,20,12,20,22,17,15,25,19,18,23,17,21,21,23,19,21,23,23,23,17,22,25,19,14,0]],
             coWeights: [{"a": 11, "b": 21, "w": 34}, {"a": 33, "b": 40, "w": 33}, {"a": 37, "b": 40, "w": 31}, {"a": 6, "b": 38, "w": 31}, {"a": 10, "b": 31, "w": 31}, {"a": 12, "b": 24, "w": 31}, {"a": 1, "b": 28, "w": 30}, {"a": 24, "b": 27, "w": 30}, {"a": 34, "b": 42, "w": 30}, {"a": 19, "b": 21, "w": 29}, {"a": 14, "b": 15, "w": 29}, {"a": 3, "b": 13, "w": 29}, {"a": 13, "b": 33, "w": 29}, {"a": 3, "b": 20, "w": 29}, {"a": 3, "b": 24, "w": 29}, {"a": 15, "b": 34, "w": 29}, {"a": 12, "b": 34, "w": 29}, {"a": 18, "b": 31, "w": 28}, {"a": 13, "b": 18, "w": 28}, {"a": 12, "b": 15, "w": 28}]
         };
 
@@ -350,53 +836,331 @@
         class LottoEngine {
             constructor() {
                 this.freqs = [...FULL_HISTORY_STATS.frequencies];
-                this.matrix = Array(46).fill(0).map(() => Array(46).fill(0));
-                FULL_HISTORY_STATS.coWeights.forEach(p => {
-                    this.matrix[p.a][p.b] = p.w;
-                    this.matrix[p.b][p.a] = p.w;
-                });
+                this.recent30 = [...(FULL_HISTORY_STATS.recent30Freqs || Array(46).fill(4))];
+                this.recent10 = [...(FULL_HISTORY_STATS.recent10Freqs || Array(46).fill(1))];
+                this.missing = [...(FULL_HISTORY_STATS.missingDraws || Array(46).fill(5))];
+                this.lastDraw = RECENT_HISTORY_DATA.length ? [...RECENT_HISTORY_DATA[0].numbers] : [];
+
+                if (FULL_HISTORY_STATS.coMatrix) {
+                    this.matrix = FULL_HISTORY_STATS.coMatrix.map(row => [...row]);
+                } else {
+                    this.matrix = Array(46).fill(0).map(() => Array(46).fill(0));
+                    FULL_HISTORY_STATS.coWeights.forEach(p => {
+                        this.matrix[p.a][p.b] = p.w;
+                        this.matrix[p.b][p.a] = p.w;
+                    });
+                }
             }
 
-            drawSingle(probabilities, selected) {
+            /**
+             * ① 장기 누적 베이스 + 최근 30/10회 핫 트렌드 + 장기 미출현 회귀 + 직전 회차 이월수/이웃수(±1) 결합
+             */
+            createInitialProbabilities(excludedSet = new Set()) {
+                const probs = Array(46).fill(0);
+                const avgFreq = this.freqs.slice(1).reduce((a, b) => a + b, 0) / 45 || 162;
+
+                const lastSet = new Set(this.lastDraw);
+                const neighborSet = new Set();
+                this.lastDraw.forEach(n => {
+                    if (n > 1 && !lastSet.has(n - 1)) neighborSet.add(n - 1);
+                    if (n < 45 && !lastSet.has(n + 1)) neighborSet.add(n + 1);
+                });
+
+                for (let i = 1; i <= 45; i++) {
+                    if (excludedSet.has(i)) {
+                        probs[i] = 0;
+                        continue;
+                    }
+
+                    // 1) 역대 누적 빈도 베이스 (비중 축소 및 평준화: 약 25점 스케일)
+                    const longTermScore = 25 * (this.freqs[i] / avgFreq);
+
+                    // 2) 최근 30회차 & 10회차 단기 출현 트렌드 (핫 넘버 가중치)
+                    const trendScore = (this.recent30[i] * 5.5) + (this.recent10[i] * 8.0);
+
+                    // 3) 미출현 주기(콜드 넘버 회귀) 가중치: 10주 이상 미출현 번호 반등 에너지 반영
+                    let coldScore = 0;
+                    const miss = this.missing[i];
+                    if (miss >= 15) {
+                        coldScore = 18 + Math.min(miss - 15, 10) * 1.5;
+                    } else if (miss >= 10) {
+                        coldScore = 10 + (miss - 10) * 1.5;
+                    }
+
+                    // 4) 직전 회차 이월수 및 이웃수(±1) 가중치
+                    let carryNeighborScore = 0;
+                    if (lastSet.has(i)) {
+                        carryNeighborScore = 18;
+                    } else if (neighborSet.has(i)) {
+                        carryNeighborScore = 14;
+                    }
+
+                    probs[i] = longTermScore + trendScore + coldScore + carryNeighborScore;
+                }
+
+                return probs;
+            }
+
+            drawSingle(probabilities, selected, excludedSet = new Set()) {
                 const currentProbs = [...probabilities];
                 selected.forEach(n => currentProbs[n] = 0);
+                excludedSet.forEach(n => currentProbs[n] = 0);
                 
                 const total = currentProbs.reduce((a, b) => a + b, 0);
+                if (total <= 0) {
+                    const available = [];
+                    for (let i = 1; i <= 45; i++) {
+                        if (!selected.includes(i) && !excludedSet.has(i)) available.push(i);
+                    }
+                    return available[Math.floor(Math.random() * available.length)] || 1;
+                }
+
                 const r = Math.random() * total;
                 let s = 0;
                 for (let i = 1; i <= 45; i++) {
                     s += currentProbs[i];
-                    if (r <= s) return i;
+                    if (r <= s && currentProbs[i] > 0) return i;
                 }
                 return 45;
             }
 
-            updateWeights(picked, probabilities, selected) {
+            /**
+             * ② 45x45 전체 번호 쌍 동반 출현 매트릭스 정규화 및 자연스러운 연번(±1)/구간 군집 시너지 반영
+             */
+            updateWeights(picked, probabilities, selected, excludedSet = new Set()) {
                 const patterns = this.matrix[picked];
+                if (!patterns) return;
+
+                let sumCo = 0;
+                let minCo = Infinity;
+                let count = 0;
                 for (let j = 1; j <= 45; j++) {
-                    if (!selected.includes(j)) {
-                        probabilities[j] += patterns[j] * 15;
+                    if (j === picked) continue;
+                    const w = patterns[j] || 0;
+                    sumCo += w;
+                    if (w < minCo) minCo = w;
+                    count++;
+                }
+                const avgCo = count > 0 ? sumCo / count : 20;
+                if (!isFinite(minCo)) minCo = 0;
+
+                for (let j = 1; j <= 45; j++) {
+                    if (!selected.includes(j) && !excludedSet.has(j)) {
+                        const coCount = patterns[j] || 0;
+                        const baseCoBoost = Math.max(0, coCount - minCo) * 1.6;
+                        const aboveAvgBoost = Math.max(0, coCount - avgCo) * 3.2;
+
+                        // 연속 번호(±1) 및 인접 번호(±2) 자연 군집 시너지
+                        const dist = Math.abs(picked - j);
+                        let clusterBoost = 0;
+                        if (dist === 1) {
+                            clusterBoost = 12 + Math.max(0, coCount - avgCo) * 1.5;
+                        } else if (dist === 2) {
+                            clusterBoost = 6;
+                        }
+
+                        probabilities[j] += baseCoBoost + aboveAvgBoost + clusterBoost;
                     }
                 }
+            }
+
+            generateOneGame(fixedNumbers = [], excludedSet = new Set()) {
+                const selected = [...fixedNumbers];
+                const probs = this.createInitialProbabilities(excludedSet);
+
+                // 고정수가 이미 있다면 고정수들의 상관관계 가중치도 먼저 반영
+                selected.forEach(fixedNum => {
+                    this.updateWeights(fixedNum, probs, selected, excludedSet);
+                });
+
+                while (selected.length < 6) {
+                    const picked = this.drawSingle(probs, selected, excludedSet);
+                    selected.push(picked);
+                    this.updateWeights(picked, probs, selected, excludedSet);
+                }
+
+                return selected.sort((a, b) => a - b);
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const engine = new LottoEngine();
             const btn = document.getElementById('generate-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            const saveBtn = document.getElementById('save-btn');
             const display = document.getElementById('number-display');
             const sphere = document.getElementById('machine-sphere');
             const exit = document.getElementById('draw-exit');
             const status = document.getElementById('drawing-status');
 
-            const createBall = (num, small = false) => {
+            // 실전 구매 상태 관리
+            let gameCount = 1;          // 1 or 5
+            let isFastMode = false;     // 일반 연출 vs 즉시 추첨
+            let pickerMode = 'fixed';   // 'fixed' | 'exclude'
+            const fixedSet = new Set();
+            const excludedSet = new Set();
+            let currentGamesResult = []; // 최근 추첨된 게임 배열 (예: [[1,2,3,4,5,6], ...])
+            const SAVED_STORAGE_KEY = 'premium_lotto_saved_tickets_v1';
+
+            const getColorClass = (num) => {
+                if (num <= 10) return 'ball-1-10';
+                if (num <= 20) return 'ball-11-20';
+                if (num <= 30) return 'ball-21-30';
+                if (num <= 40) return 'ball-31-40';
+                return 'ball-41-45';
+            };
+
+            const createBall = (num, size = 'normal', isFixed = false, animate = true) => {
                 const ball = document.createElement('div');
-                const sizeClass = small ? 'small-ball' : '';
-                ball.className = `lotto-ball ${sizeClass} ${num<=10?'ball-1-10':num<=20?'ball-11-20':num<=30?'ball-21-30':num<=40?'ball-31-40':'ball-41-45'}`;
+                const sizeClass = size === 'small' ? 'small-ball' : size === 'medium' ? 'medium-ball' : '';
+                const fixedClass = isFixed ? 'fixed-mark' : '';
+                const animClass = animate ? '' : 'no-anim';
+                ball.className = `lotto-ball ${sizeClass} ${fixedClass} ${animClass} ${getColorClass(num)}`.replace(/\s+/g, ' ').trim();
                 ball.textContent = num;
                 return ball;
             };
 
+            const getGameStatsText = (nums) => {
+                const sum = nums.reduce((a, b) => a + b, 0);
+                const odds = nums.filter(n => n % 2 === 1).length;
+                const evens = 6 - odds;
+                return `합계 ${sum} · 홀짝 ${odds}:${evens}`;
+            };
+
+            // 1~45 번호 선택기 렌더링 및 업데이트
+            const pickerGrid = document.getElementById('picker-grid');
+            const fixedBadge = document.getElementById('fixed-count-badge');
+            const excludeBadge = document.getElementById('exclude-count-badge');
+            const pickerHelpText = document.getElementById('picker-help-text');
+
+            const updatePickerUI = () => {
+                fixedBadge.textContent = `고정 ${fixedSet.size}`;
+                excludeBadge.textContent = `제외 ${excludedSet.size}`;
+
+                const buttons = pickerGrid.querySelectorAll('.picker-num-btn');
+                buttons.forEach(b => {
+                    const num = Number(b.dataset.num);
+                    b.classList.remove('is-fixed', 'is-excluded');
+                    if (fixedSet.has(num)) b.classList.add('is-fixed');
+                    if (excludedSet.has(num)) b.classList.add('is-excluded');
+                });
+            };
+
+            const initPickerGrid = () => {
+                pickerGrid.innerHTML = '';
+                for (let n = 1; n <= 45; n++) {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'picker-num-btn';
+                    b.dataset.num = n;
+                    b.textContent = n;
+                    b.onclick = () => {
+                        if (pickerMode === 'fixed') {
+                            if (fixedSet.has(n)) {
+                                fixedSet.delete(n);
+                            } else {
+                                if (fixedSet.size >= 5) {
+                                    status.textContent = '고정수는 최대 5개까지 선택할 수 있습니다.';
+                                    return;
+                                }
+                                excludedSet.delete(n);
+                                fixedSet.add(n);
+                            }
+                        } else {
+                            if (excludedSet.has(n)) {
+                                excludedSet.delete(n);
+                            } else {
+                                if (excludedSet.size >= 35) {
+                                    status.textContent = '제외수는 최대 35개까지 선택할 수 있습니다.';
+                                    return;
+                                }
+                                fixedSet.delete(n);
+                                excludedSet.add(n);
+                            }
+                        }
+                        updatePickerUI();
+                    };
+                    pickerGrid.appendChild(b);
+                }
+            };
+
+            initPickerGrid();
+
+            // 툴바 이벤트 바인딩
+            document.querySelectorAll('#game-count-control .seg-btn').forEach(seg => {
+                seg.onclick = () => {
+                    document.querySelectorAll('#game-count-control .seg-btn').forEach(s => s.classList.remove('active'));
+                    seg.classList.add('active');
+                    gameCount = Number(seg.dataset.games);
+                };
+            });
+
+            document.querySelectorAll('#speed-control .seg-btn').forEach(seg => {
+                seg.onclick = () => {
+                    document.querySelectorAll('#speed-control .seg-btn').forEach(s => s.classList.remove('active'));
+                    seg.classList.add('active');
+                    isFastMode = seg.dataset.fast === 'true';
+                };
+            });
+
+            const pickerPanel = document.getElementById('number-picker-panel');
+            document.getElementById('toggle-picker-btn').onclick = () => {
+                pickerPanel.classList.toggle('open');
+            };
+
+            const tabFixed = document.getElementById('tab-fixed');
+            const tabExclude = document.getElementById('tab-exclude');
+
+            tabFixed.onclick = () => {
+                pickerMode = 'fixed';
+                tabFixed.className = 'mode-tab active-fixed';
+                tabExclude.className = 'mode-tab';
+                pickerHelpText.innerHTML = '📌 <strong>고정수 모드</strong>: 아래 번호를 클릭하면 모든 추첨 게임에 해당 번호가 반드시 포함됩니다. (최대 5개)';
+            };
+
+            tabExclude.onclick = () => {
+                pickerMode = 'exclude';
+                tabExclude.className = 'mode-tab active-exclude';
+                tabFixed.className = 'mode-tab';
+                pickerHelpText.innerHTML = '🚫 <strong>제외수 모드</strong>: 아래 번호를 클릭하면 추첨 후보에서 완전히 제외됩니다. (최대 35개)';
+            };
+
+            // 빠른 설정 액션
+            document.getElementById('btn-exclude-last-draw').onclick = () => {
+                if (!RECENT_HISTORY_DATA.length) return;
+                const lastNums = RECENT_HISTORY_DATA[0].numbers;
+                lastNums.forEach(n => {
+                    fixedSet.delete(n);
+                    excludedSet.add(n);
+                });
+                updatePickerUI();
+                status.textContent = `직전 ${RECENT_HISTORY_DATA[0].draw_no}회 당첨번호 6개를 제외수로 설정했습니다.`;
+            };
+
+            document.getElementById('btn-include-last-one').onclick = () => {
+                if (!RECENT_HISTORY_DATA.length) return;
+                const lastNums = RECENT_HISTORY_DATA[0].numbers;
+                // 기존 직전회차 번호가 고정수/제외수에 있다면 정리 후 1개만 고정수로 선택 (이월수 전략)
+                lastNums.forEach(n => fixedSet.delete(n));
+                if (fixedSet.size >= 5) {
+                    status.textContent = '고정수가 이미 5개 선택되어 있습니다.';
+                    return;
+                }
+                const randomCarry = lastNums[Math.floor(Math.random() * lastNums.length)];
+                excludedSet.delete(randomCarry);
+                fixedSet.add(randomCarry);
+                updatePickerUI();
+                status.textContent = `직전 회차 이월수 후보로 [${randomCarry}번]을 고정수에 추가했습니다.`;
+            };
+
+            document.getElementById('btn-reset-picker').onclick = () => {
+                fixedSet.clear();
+                excludedSet.clear();
+                updatePickerUI();
+                status.textContent = '고정수 및 제외수 설정이 초기화되었습니다.';
+            };
+
+            // 최근 5회 당첨 결과 렌더링
             const renderRecentDraws = () => {
                 const list = document.getElementById('recent-draws-list');
                 if (!list) return;
@@ -413,7 +1177,7 @@
                     const balls = document.createElement('div');
                     balls.className = 'recent-balls';
                     draw.numbers.forEach(n => {
-                        balls.appendChild(createBall(n, true));
+                        balls.appendChild(createBall(n, 'small'));
                     });
                     
                     row.appendChild(info);
@@ -424,44 +1188,423 @@
 
             renderRecentDraws();
 
+            // 하단 분석 인사이트 카드에 실시간 핫/콜드/이월·이웃수 배지 렌더링
+            const renderAnalysisInsights = () => {
+                const trendContainer = document.getElementById('trend-insight-badges');
+                const carryContainer = document.getElementById('carry-insight-badges');
+                if (!trendContainer || !carryContainer) return;
+
+                const hotList = [];
+                const coldList = [];
+                for (let n = 1; n <= 45; n++) {
+                    hotList.push({ num: n, count: engine.recent30[n] || 0 });
+                    if ((engine.missing[n] || 0) >= 12) {
+                        coldList.push({ num: n, miss: engine.missing[n] });
+                    }
+                }
+                hotList.sort((a, b) => b.count - a.count);
+                coldList.sort((a, b) => b.miss - a.miss);
+
+                const topHot = hotList.slice(0, 4).map(x => `${x.num}번(${x.count}회)`).join(', ');
+                const topCold = coldList.slice(0, 4).map(x => `${x.num}번(${x.miss}주)`).join(', ');
+
+                trendContainer.innerHTML = `
+                    <span class="stat-pill" style="color:#fbbf24; border:1px solid rgba(251,191,36,0.3);">🔥 30회 핫: ${topHot}</span>
+                    <span class="stat-pill" style="color:#60a5fa; border:1px solid rgba(96,165,250,0.3);">❄️ 장기 미출현: ${topCold}</span>
+                `;
+
+                const lastNums = engine.lastDraw;
+                const neighborSet = new Set();
+                const lastSet = new Set(lastNums);
+                lastNums.forEach(n => {
+                    if (n > 1 && !lastSet.has(n - 1)) neighborSet.add(n - 1);
+                    if (n < 45 && !lastSet.has(n + 1)) neighborSet.add(n + 1);
+                });
+                const neighbors = [...neighborSet].sort((a, b) => a - b).slice(0, 8).join(', ');
+
+                carryContainer.innerHTML = `
+                    <span class="stat-pill" style="color:#a5b4fc; border:1px solid rgba(165,180,252,0.3);">🔄 직전 이월 후보: ${lastNums.join(', ')}</span>
+                    <span class="stat-pill" style="color:#4ade80; border:1px solid rgba(74,222,128,0.3);">↔️ 주요 이웃수(±1): ${neighbors}...</span>
+                `;
+            };
+
+            renderAnalysisInsights();
+
+            // 1게임 화면 렌더링 (정렬된 결과 + 통계 표시)
+            const renderSingleGameResult = (nums, animate = false) => {
+                display.innerHTML = '';
+                const wrapper = document.createElement('div');
+                wrapper.className = 'single-game-wrapper';
+
+                const ballsRow = document.createElement('div');
+                ballsRow.className = 'single-balls-row';
+                nums.forEach(n => {
+                    ballsRow.appendChild(createBall(n, 'normal', fixedSet.has(n), animate));
+                });
+
+                const meta = document.createElement('div');
+                meta.className = 'stat-pill';
+                meta.textContent = `오름차순 정렬 완료 · ${getGameStatsText(nums)}`;
+
+                wrapper.appendChild(ballsRow);
+                wrapper.appendChild(meta);
+                display.appendChild(wrapper);
+            };
+
+            // 5게임 세트 용지 렌더링 (개별 줄 재추첨 지원)
+            const renderFiveGamesSlip = () => {
+                display.innerHTML = '';
+                const slip = document.createElement('div');
+                slip.className = 'games-slip';
+                const labels = ['A', 'B', 'C', 'D', 'E'];
+
+                currentGamesResult.forEach((nums, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'game-row';
+
+                    const label = document.createElement('div');
+                    label.className = 'game-label';
+                    label.textContent = labels[idx] || (idx + 1);
+
+                    const ballsContainer = document.createElement('div');
+                    ballsContainer.className = 'game-balls';
+                    nums.forEach(n => {
+                        ballsContainer.appendChild(createBall(n, 'medium', fixedSet.has(n)));
+                    });
+
+                    const meta = document.createElement('div');
+                    meta.className = 'game-meta';
+
+                    const stat = document.createElement('span');
+                    stat.className = 'stat-pill';
+                    stat.textContent = getGameStatsText(nums);
+
+                    const rerollBtn = document.createElement('button');
+                    rerollBtn.type = 'button';
+                    rerollBtn.className = 'reroll-row-btn';
+                    rerollBtn.textContent = '🔄 재추첨';
+                    rerollBtn.onclick = () => {
+                        const newNums = engine.generateOneGame([...fixedSet], excludedSet);
+                        currentGamesResult[idx] = newNums;
+
+                        // 다른 행은 건드리지 않고 현재 행의 공과 통계만 부분 업데이트
+                        ballsContainer.innerHTML = '';
+                        newNums.forEach(n => {
+                            const isFixed = fixedSet.has(n);
+                            // 고정수는 애니메이션 없이 유지하고, 새로 뽑힌 번호만 애니메이션 연출
+                            ballsContainer.appendChild(createBall(n, 'medium', isFixed, !isFixed));
+                        });
+                        stat.textContent = getGameStatsText(newNums);
+
+                        row.classList.remove('row-highlight');
+                        void row.offsetWidth;
+                        row.classList.add('row-highlight');
+                        setTimeout(() => row.classList.remove('row-highlight'), 650);
+
+                        status.textContent = `${labels[idx]}열 게임을 새로 추첨했습니다.`;
+                    };
+
+                    meta.appendChild(stat);
+                    meta.appendChild(rerollBtn);
+
+                    row.appendChild(label);
+                    row.appendChild(ballsContainer);
+                    row.appendChild(meta);
+                    slip.appendChild(row);
+                });
+
+                display.appendChild(slip);
+            };
+
+            // 메인 추첨 실행
             btn.onclick = async () => {
                 btn.disabled = true;
+                copyBtn.classList.remove('visible');
+                saveBtn.classList.remove('visible');
                 display.innerHTML = '';
                 exit.innerHTML = '';
-                const selected = [];
-                const probs = [...engine.freqs];
+                currentGamesResult = [];
 
-                for (let i = 1; i <= 6; i++) {
-                    status.textContent = `${i}번째 번호 분석 및 추첨 중...`;
-                    sphere.classList.add('sphere-spinning');
-                    
-                    // Shuffle effect
-                    await new Promise(r => setTimeout(r, 1200));
-                    
-                    const picked = engine.drawSingle(probs, selected);
-                    selected.push(picked);
-                    engine.updateWeights(picked, probs, selected);
+                const fixedArr = [...fixedSet].sort((a, b) => a - b);
 
-                    // Show ball at exit
-                    const exitBall = createBall(picked);
-                    exit.innerHTML = '';
-                    exit.appendChild(exitBall);
-                    
-                    // Stop spinning briefly
-                    sphere.classList.remove('sphere-spinning');
-                    await new Promise(r => setTimeout(r, 500));
+                if (gameCount === 1) {
+                    const selected = [...fixedArr];
+                    const probs = engine.createInitialProbabilities(excludedSet);
+                    selected.forEach(n => engine.updateWeights(n, probs, selected, excludedSet));
 
-                    // Move to display
-                    display.appendChild(createBall(picked));
-                    exit.innerHTML = '';
-                    
-                    await new Promise(r => setTimeout(r, 300));
+                    if (!isFastMode) {
+                        // 고정수 먼저 표시
+                        selected.forEach(n => {
+                            display.appendChild(createBall(n, 'normal', true));
+                        });
+
+                        for (let i = selected.length + 1; i <= 6; i++) {
+                            status.textContent = `${i}번째 번호 분석 및 추첨 중...`;
+                            sphere.classList.add('sphere-spinning');
+                            await new Promise(r => setTimeout(r, 900));
+
+                            const picked = engine.drawSingle(probs, selected, excludedSet);
+                            selected.push(picked);
+                            engine.updateWeights(picked, probs, selected, excludedSet);
+
+                            const exitBall = createBall(picked, 'normal', false);
+                            exit.innerHTML = '';
+                            exit.appendChild(exitBall);
+
+                            sphere.classList.remove('sphere-spinning');
+                            await new Promise(r => setTimeout(r, 400));
+
+                            display.appendChild(createBall(picked, 'normal', false));
+                            exit.innerHTML = '';
+                            await new Promise(r => setTimeout(r, 200));
+                        }
+                    } else {
+                        sphere.classList.add('sphere-spinning');
+                        await new Promise(r => setTimeout(r, 250));
+                        while (selected.length < 6) {
+                            const picked = engine.drawSingle(probs, selected, excludedSet);
+                            selected.push(picked);
+                            engine.updateWeights(picked, probs, selected, excludedSet);
+                        }
+                        sphere.classList.remove('sphere-spinning');
+                    }
+
+                    const sortedNums = selected.sort((a, b) => a - b);
+                    currentGamesResult = [sortedNums];
+                    renderSingleGameResult(sortedNums, isFastMode);
+                    status.textContent = '1게임 추첨 및 마킹순(오름차순) 정렬 완료!';
+                } else {
+                    // 5게임 1세트 추첨
+                    const labels = ['A', 'B', 'C', 'D', 'E'];
+
+                    if (isFastMode) {
+                        status.textContent = '5게임(A~E열) 세트 즉시 추첨 중...';
+                        sphere.classList.add('sphere-spinning');
+                        await new Promise(r => setTimeout(r, 180));
+                        sphere.classList.remove('sphere-spinning');
+
+                        for (let g = 0; g < 5; g++) {
+                            const gameNums = engine.generateOneGame(fixedArr, excludedSet);
+                            currentGamesResult.push(gameNums);
+                        }
+                        renderFiveGamesSlip();
+                    } else {
+                        // 일반 연출: A열부터 E열까지 한 줄씩 순차적으로 공이 뽑히는 라이브 연출
+                        display.innerHTML = '';
+                        const slip = document.createElement('div');
+                        slip.className = 'games-slip';
+                        display.appendChild(slip);
+
+                        const rowRefs = [];
+                        for (let g = 0; g < 5; g++) {
+                            const row = document.createElement('div');
+                            row.className = 'game-row';
+
+                            const label = document.createElement('div');
+                            label.className = 'game-label';
+                            label.textContent = labels[g];
+
+                            const ballsContainer = document.createElement('div');
+                            ballsContainer.className = 'game-balls';
+                            fixedArr.forEach(n => {
+                                ballsContainer.appendChild(createBall(n, 'medium', true, false));
+                            });
+
+                            const meta = document.createElement('div');
+                            meta.className = 'game-meta';
+                            const stat = document.createElement('span');
+                            stat.className = 'stat-pill';
+                            stat.textContent = '대기 중...';
+                            meta.appendChild(stat);
+
+                            row.appendChild(label);
+                            row.appendChild(ballsContainer);
+                            row.appendChild(meta);
+                            slip.appendChild(row);
+                            rowRefs.push({ row, ballsContainer, meta, stat });
+                        }
+
+                        for (let g = 0; g < 5; g++) {
+                            const { row, ballsContainer, meta, stat } = rowRefs[g];
+                            row.classList.add('row-highlight');
+                            stat.textContent = '추첨 중...';
+                            sphere.classList.add('sphere-spinning');
+
+                            const selected = [...fixedArr];
+                            const probs = engine.createInitialProbabilities(excludedSet);
+                            selected.forEach(n => engine.updateWeights(n, probs, selected, excludedSet));
+
+                            while (selected.length < 6) {
+                                status.textContent = `${labels[g]}열 게임 (${g + 1}/5) - ${selected.length + 1}번째 공 추첨 중...`;
+                                await new Promise(r => setTimeout(r, 220));
+
+                                const picked = engine.drawSingle(probs, selected, excludedSet);
+                                selected.push(picked);
+                                engine.updateWeights(picked, probs, selected, excludedSet);
+
+                                exit.innerHTML = '';
+                                exit.appendChild(createBall(picked, 'normal', false, true));
+                                ballsContainer.appendChild(createBall(picked, 'medium', false, true));
+
+                                await new Promise(r => setTimeout(r, 160));
+                            }
+
+                            sphere.classList.remove('sphere-spinning');
+                            exit.innerHTML = '';
+
+                            const sortedNums = selected.sort((a, b) => a - b);
+                            currentGamesResult.push(sortedNums);
+
+                            // 해당 줄 오름차순 정렬 완료 상태로 정돈
+                            ballsContainer.innerHTML = '';
+                            sortedNums.forEach(n => {
+                                ballsContainer.appendChild(createBall(n, 'medium', fixedSet.has(n), false));
+                            });
+                            stat.textContent = getGameStatsText(sortedNums);
+
+                            const rerollBtn = document.createElement('button');
+                            rerollBtn.type = 'button';
+                            rerollBtn.className = 'reroll-row-btn';
+                            rerollBtn.textContent = '🔄 재추첨';
+                            rerollBtn.onclick = () => {
+                                const newNums = engine.generateOneGame([...fixedSet], excludedSet);
+                                currentGamesResult[g] = newNums;
+                                ballsContainer.innerHTML = '';
+                                newNums.forEach(n => {
+                                    const isFixed = fixedSet.has(n);
+                                    ballsContainer.appendChild(createBall(n, 'medium', isFixed, !isFixed));
+                                });
+                                stat.textContent = getGameStatsText(newNums);
+                                row.classList.remove('row-highlight');
+                                void row.offsetWidth;
+                                row.classList.add('row-highlight');
+                                setTimeout(() => row.classList.remove('row-highlight'), 650);
+                                status.textContent = `${labels[g]}열 게임을 새로 추첨했습니다.`;
+                            };
+                            meta.appendChild(rerollBtn);
+
+                            row.classList.remove('row-highlight');
+                            await new Promise(r => setTimeout(r, 150));
+                        }
+                    }
+
+                    status.textContent = '5게임 1세트(5,000원권) 추첨 완료! 마음에 안 드는 줄은 개별 재추첨이 가능합니다.';
                 }
 
-                status.textContent = '모든 번호 추첨 완료!';
                 btn.textContent = '다시 추첨하기';
                 btn.disabled = false;
+                copyBtn.classList.add('visible');
+                saveBtn.classList.add('visible');
             };
+
+            // 번호 클립보드 복사
+            copyBtn.onclick = async () => {
+                if (!currentGamesResult.length) return;
+                const labels = ['A', 'B', 'C', 'D', 'E'];
+                const textLines = currentGamesResult.map((nums, idx) => {
+                    const prefix = currentGamesResult.length > 1 ? `[${labels[idx]}열] ` : `[추천번호] `;
+                    return `${prefix}${nums.map(n => String(n).padStart(2, '0')).join(', ')} (${getGameStatsText(nums)})`;
+                });
+                const fullText = `🍀 Premium Lotto 추천 번호\n${textLines.join('\n')}`;
+                try {
+                    await navigator.clipboard.writeText(fullText);
+                    status.textContent = '📋 추천 번호가 클립보드에 복사되었습니다!';
+                } catch {
+                    status.textContent = '복사 완료: ' + textLines.join(' / ');
+                }
+            };
+
+            // 번호 보관함(LocalStorage) 관리
+            const savedSection = document.getElementById('saved-section');
+            const savedList = document.getElementById('saved-list');
+
+            const loadSavedTickets = () => {
+                try {
+                    return JSON.parse(localStorage.getItem(SAVED_STORAGE_KEY) || '[]');
+                } catch {
+                    return [];
+                }
+            };
+
+            const renderSavedTickets = () => {
+                const items = loadSavedTickets();
+                if (!items.length) {
+                    savedSection.style.display = 'none';
+                    return;
+                }
+                savedSection.style.display = 'block';
+                savedList.innerHTML = '';
+
+                items.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'saved-item';
+
+                    const left = document.createElement('div');
+                    left.className = 'saved-item-left';
+
+                    const timeSpan = document.createElement('span');
+                    timeSpan.className = 'saved-time';
+                    timeSpan.textContent = item.label;
+
+                    const balls = document.createElement('div');
+                    balls.className = 'recent-balls';
+                    item.numbers.forEach(n => {
+                        balls.appendChild(createBall(n, 'small', (item.fixed || []).includes(n)));
+                    });
+
+                    const stat = document.createElement('span');
+                    stat.className = 'stat-pill';
+                    stat.textContent = getGameStatsText(item.numbers);
+
+                    left.appendChild(timeSpan);
+                    left.appendChild(balls);
+                    left.appendChild(stat);
+
+                    const delBtn = document.createElement('button');
+                    delBtn.type = 'button';
+                    delBtn.className = 'delete-saved-btn';
+                    delBtn.textContent = '삭제';
+                    delBtn.onclick = () => {
+                        const next = loadSavedTickets().filter(x => x.id !== item.id);
+                        localStorage.setItem(SAVED_STORAGE_KEY, JSON.stringify(next));
+                        renderSavedTickets();
+                    };
+
+                    row.appendChild(left);
+                    row.appendChild(delBtn);
+                    savedList.appendChild(row);
+                });
+            };
+
+            saveBtn.onclick = () => {
+                if (!currentGamesResult.length) return;
+                const existing = loadSavedTickets();
+                const now = new Date();
+                const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+                const labels = ['A', 'B', 'C', 'D', 'E'];
+
+                currentGamesResult.forEach((nums, idx) => {
+                    const tag = currentGamesResult.length > 1 ? `${timeStr} (${labels[idx]})` : `${timeStr}`;
+                    existing.unshift({
+                        id: `${Date.now()}_${idx}_${Math.random()}`,
+                        label: tag,
+                        numbers: nums,
+                        fixed: [...fixedSet]
+                    });
+                });
+
+                localStorage.setItem(SAVED_STORAGE_KEY, JSON.stringify(existing.slice(0, 25)));
+                renderSavedTickets();
+                status.textContent = '⭐ 내 번호 보관함에 저장되었습니다! (브라우저를 닫아도 유지됩니다)';
+            };
+
+            document.getElementById('clear-saved-btn').onclick = () => {
+                localStorage.removeItem(SAVED_STORAGE_KEY);
+                renderSavedTickets();
+                status.textContent = '보관함을 비웠습니다.';
+            };
+
+            renderSavedTickets();
         });
     </script>
 </body>
